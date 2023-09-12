@@ -5,23 +5,23 @@
 import SwiftUI
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension TransitionEffectStyle where Self == RotationEffect {
+extension ViewEffect where Self == RotationEffect {
 
-    /// A ``TransitionEffectStyle`` that rotates the view by an angle
+    /// A ``ViewEffect`` that rotates the view by an angle
     public static var rotate: RotationEffect {
         RotationEffect(angle: .degrees(360), anchor: .center)
     }
 
-    /// A ``TransitionEffectStyle`` that rotates the view by an angle
-    public static func scale(angle: Angle, anchor: UnitPoint = .center) -> RotationEffect {
+    /// A ``ViewEffect`` that rotates the view by an angle
+    public static func rotate(angle: Angle, anchor: UnitPoint = .center) -> RotationEffect {
         RotationEffect(angle: angle, anchor: anchor)
     }
 }
 
-/// A ``TransitionEffectStyle`` that rotates the view by an angle
+/// A ``ViewEffect`` that rotates the view by an angle
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
-public struct RotationEffect: TransitionEffectStyle {
+public struct RotationEffect: ViewEffect {
 
     public var angle: Angle
     public var anchor: UnitPoint
@@ -32,7 +32,7 @@ public struct RotationEffect: TransitionEffectStyle {
         self.anchor = anchor
     }
 
-    public func makeBody(configuration: TransitionEffectConfiguration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         configuration.content
             .modifier(
                 Effect(
