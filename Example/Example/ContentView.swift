@@ -13,7 +13,7 @@ struct ContentView: View {
     @State var isEnabled = true
 
     var body: some View {
-        VStack(spacing: 24) {
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 48) {
                 VStack(spacing: 48) {
                     Text("Ignition")
@@ -95,6 +95,7 @@ struct ContentView: View {
                 )
                 .foregroundColor(.red)
             }
+            .padding(24)
         }
     }
 

@@ -133,6 +133,11 @@ private struct OnChangeViewEffectModifierBody<
         set { progress = newValue }
     }
 
+    private struct OnChangeValue: Equatable {
+        var isComplete: Bool
+        var id: UInt
+    }
+
     init(
         effect: Effect,
         isActive: Binding<Bool>,
@@ -157,8 +162,10 @@ private struct OnChangeViewEffectModifierBody<
                 )
                 .transaction { $0.disablesAnimations = true }
             )
-            .onChange(of: progress >= 1) { isComplete in
-                if isComplete {
+            .onChange(
+                of: OnChangeValue(isComplete: progress >= 1, id: id)
+            ) { value in
+                if value.isComplete {
                     isActive.wrappedValue = false
                 }
             }
