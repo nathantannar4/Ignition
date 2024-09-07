@@ -18,12 +18,10 @@ struct ContentView: View {
                 VStack(spacing: 48) {
                     Text("Ignition")
                         .font(.title.bold())
-                        .frame(height: 30, alignment: .center)
 
                     Text("Schedule Driven")
                         .foregroundColor(.secondary)
                         .font(.headline)
-                        .frame(height: 50, alignment: .center)
 
                     VStack(spacing: 4) {
                         Text("Event Driven")
@@ -38,7 +36,6 @@ struct ContentView: View {
                         }
                         .buttonStyle(.plain)
                     }
-                    .frame(height: 50, alignment: .center)
                 }
 
                 makeEffectPair(
@@ -94,6 +91,17 @@ struct ContentView: View {
                     )
                 )
                 .foregroundColor(.red)
+
+                makeEffectPair(
+                    name: "Custom",
+                    shape: RoundedRectangle(cornerRadius: 4),
+                    effect: CustomViewEffect { configuration in
+                        configuration.content
+                            .saturation(1 - configuration.progress)
+                    },
+                    animation: .default
+                )
+                .foregroundColor(.orange)
             }
             .padding(24)
         }
@@ -112,7 +120,6 @@ struct ContentView: View {
             Text(name)
                 .font(.headline)
                 .foregroundColor(.secondary)
-                .frame(height: 30, alignment: .center)
 
             shape
                 .frame(width: 50, height: 50)
@@ -134,6 +141,23 @@ struct ContentView: View {
         }
     }
 }
+
+
+struct CustomViewEffect<Content: View>: ViewEffect {
+
+    var content: (Configuration) -> Content
+
+    init(
+        @ViewBuilder content: @escaping (Configuration) -> Content
+    ) {
+        self.content = content
+    }
+
+    func makeBody(configuration: Configuration) -> some View {
+        content(configuration)
+    }
+}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
