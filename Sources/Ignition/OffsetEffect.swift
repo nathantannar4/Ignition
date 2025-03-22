@@ -65,3 +65,24 @@ public struct OffsetEffect: ViewEffect {
         }
     }
 }
+
+// MARK: - Previews
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+struct OffsetEffect_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 24) {
+            Text("Hello, World")
+                .scheduledEffect(
+                    .offset,
+                    interval: 1
+                )
+
+            Text("Hello, World")
+                .scheduledEffect(
+                    .offset(y: 20),
+                    interval: 1
+                )
+        }
+    }
+}

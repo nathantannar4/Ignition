@@ -65,3 +65,24 @@ public struct RotationEffect: ViewEffect {
         }
     }
 }
+
+// MARK: - Previews
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+struct RotationEffect_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 24) {
+            Text("Hello, World")
+                .scheduledEffect(
+                    .rotate,
+                    interval: 1
+                )
+
+            Text("Hello, World")
+                .scheduledEffect(
+                    .rotate(angle: .degrees(-180)),
+                    interval: 1
+                )
+        }
+    }
+}

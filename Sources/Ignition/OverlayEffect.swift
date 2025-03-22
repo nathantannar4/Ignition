@@ -11,7 +11,18 @@ extension ViewEffect {
     /// A ``ViewEffect`` that emits a view in the foreground
     public static func overlay<Content: View>(
         alignment: Alignment = .center,
-        @ViewBuilder content: () -> Content
+        content: Content
+    ) -> OverlayEffect<Content> where Self == OverlayEffect<Content> {
+        OverlayEffect(
+            alignment: alignment,
+            content: content
+        )
+    }
+
+    /// A ``ViewEffect`` that emits a view in the foreground
+    public static func overlay<Content: View>(
+        alignment: Alignment = .center,
+        @ViewBuilder _ content: () -> Content
     ) -> OverlayEffect<Content> where Self == OverlayEffect<Content> {
         OverlayEffect(
             alignment: alignment,
@@ -48,5 +59,41 @@ public struct OverlayEffect<Content: View>: ViewEffect {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
             )
+    }
+}
+
+// MARK: - Previews
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+struct OverlayEffect_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 24) {
+            Text("Hello, World")
+                .scheduledEffect(
+                    .overlay {
+                        Rectangle()
+                            .stroke(Color.blue, lineWidth: 2)
+                            .padding(-2)
+                    },
+                    interval: 1
+                )
+
+            Text("Hello, World")
+                .scheduledEffect(
+                    .overlay {
+                        Rectangle()
+                            .stroke(Color.blue, lineWidth: 2)
+                            .padding(-2)
+                            .transition(
+                                .asymmetric(
+                                    insertion: .scale(scale: 0.5),
+                                    removal: .scale(scale: 2)
+                                )
+                                .combined(with: .opacity)
+                            )
+                    },
+                    interval: 1
+                )
+        }
     }
 }

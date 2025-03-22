@@ -16,8 +16,8 @@ public protocol ViewEffect: DynamicProperty {
 }
 
 /// The configuration parameters for ``ViewEffect``
-@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct ViewEffectConfiguration {
 
     /// A type-erased content of a ``ViewEffectModifier``

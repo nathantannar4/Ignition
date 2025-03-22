@@ -9,21 +9,47 @@ extension ViewEffect where Self == ScaleEffect {
 
     /// A ``ViewEffect`` that scales a view between a size
     public static var scale: ScaleEffect {
-        ScaleEffect(scale: CGSize(width: 1.25, height: 1.25), anchor: .center)
+        ScaleEffect(
+            scale: CGSize(width: 1.25, height: 1.25),
+            anchor: .center
+        )
     }
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static func scale(width: CGFloat, anchor: UnitPoint = .center) -> ScaleEffect {
-        ScaleEffect(scale: CGSize(width: width, height: 1.0), anchor: anchor)
+    public static func scale(
+        width: CGFloat,
+        anchor: UnitPoint = .center
+    ) -> ScaleEffect {
+        ScaleEffect(
+            scale: CGSize(width: width, height: 1.0),
+            anchor: anchor
+        )
     }
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static func scale(height: CGFloat, anchor: UnitPoint = .center) -> ScaleEffect {
-        ScaleEffect(scale: CGSize(width: 1.0, height: height), anchor: anchor)
+    public static func scale(
+        height: CGFloat,
+        anchor: UnitPoint = .center
+    ) -> ScaleEffect {
+        ScaleEffect(
+            scale: CGSize(width: 1.0, height: height),
+            anchor: anchor
+        )
     }
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static func scale(scale: CGSize, anchor: UnitPoint = .center) -> ScaleEffect {
+    public static func scale(
+        scale: CGFloat,
+        anchor: UnitPoint = .center
+    ) -> ScaleEffect {
+        ScaleEffect(scale: CGSize(width: scale, height: scale), anchor: anchor)
+    }
+
+    /// A ``ViewEffect`` that scales a view between a size
+    public static func scale(
+        scale: CGSize,
+        anchor: UnitPoint = .center
+    ) -> ScaleEffect {
         ScaleEffect(scale: scale, anchor: anchor)
     }
 }
@@ -62,14 +88,38 @@ public struct ScaleEffect: ViewEffect {
         func effectValue(size: CGSize) -> ProjectionTransform {
             ProjectionTransform(
                 CGAffineTransform(
-                    scaleX: x,
-                    y: y
-                )
-                .translatedBy(
-                    x: (1 - x) * anchor.x * size.width,
+                    translationX: (1 - x) * anchor.x * size.width,
                     y: (1 - y) * anchor.y * size.height
                 )
+                .scaledBy(x: x, y: y)
             )
+        }
+    }
+}
+
+// MARK: - Previews
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+struct ScaleEffect_Previews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 24) {
+            Text("Hello, World")
+                .scheduledEffect(
+                    .scale,
+                    interval: 1
+                )
+
+            Text("Hello, World")
+                .scheduledEffect(
+                    .scale(scale: 2),
+                    interval: 1
+                )
+
+            Text("Hello, World")
+                .scheduledEffect(
+                    .scale(scale: 0.5),
+                    interval: 1
+                )
         }
     }
 }
