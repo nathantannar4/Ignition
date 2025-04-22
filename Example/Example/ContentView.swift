@@ -72,6 +72,28 @@ struct ContentView: View {
                 .foregroundColor(.green)
 
                 makeEffectPair(
+                    name: "Blur",
+                    shape: Rectangle(),
+                    effect: .blur(radius: 10),
+                    animation: .asymmetric(
+                        insertion: .linear(duration: 0.25),
+                        removal: .linear(duration: 0.25)
+                    )
+                )
+                .foregroundColor(.purple)
+
+                makeEffectPair(
+                    name: "Opacity",
+                    shape: Circle(),
+                    effect: .opacity,
+                    animation: .asymmetric(
+                        insertion: .linear(duration: 0.25),
+                        removal: .linear(duration: 0.25)
+                    )
+                )
+                .foregroundColor(.pink)
+
+                makeEffectPair(
                     name: "Overlay",
                     shape: Circle(),
                     effect: .overlay {
@@ -103,7 +125,7 @@ struct ContentView: View {
                 )
                 .foregroundColor(.orange)
             }
-            .padding(24)
+            .padding(.vertical, 24)
         }
     }
 

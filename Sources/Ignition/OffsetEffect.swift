@@ -23,7 +23,7 @@ extension ViewEffect where Self == OffsetEffect {
     }
 
     /// A ``ViewEffect`` that moves the view between an offset
-    public static func offset(offset: CGPoint) -> OffsetEffect {
+    public static func offset(_ offset: CGPoint) -> OffsetEffect {
         OffsetEffect(offset: offset)
     }
 }
