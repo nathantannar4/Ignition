@@ -50,6 +50,10 @@ let package = Package(
 )
 ```
 
+## Documentation
+
+Detailed documentation is available [here](https://swiftpackageindex.com/nathantannar4/Ignition/main/documentation/ignition).
+
 ## Effects
 
 `Ignition` provides 5 built in effects, but you can also make your own by conforming to the `ViewEffect` protocol.
