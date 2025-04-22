@@ -14,6 +14,14 @@ extension PrimitiveButtonStyle {
     ) -> ChangeEffectButtonStyle<Effect> where Self == ChangeEffectButtonStyle<Effect> {
         ChangeEffectButtonStyle(effect: effect)
     }
+
+    /// A ``PrimitiveButtonStyle`` that runs a ``ViewEffect`` when pressed
+    public static func changeEffect<Effect: ViewEffect>(
+        effect: Effect,
+        animation: Animation
+    ) -> ChangeEffectButtonStyle<Effect> where Self == ChangeEffectButtonStyle<Effect> {
+        ChangeEffectButtonStyle(effect: effect, animation: animation)
+    }
 }
 
 /// A ``PrimitiveButtonStyle`` that runs a ``ViewEffect`` when pressed
@@ -24,12 +32,26 @@ public struct ChangeEffectButtonStyle<
 >: PrimitiveButtonStyle {
 
     public var effect: Effect
+    public var animation: ViewEffectAnimation
 
     @State private var trigger: UInt = 0
 
     @inlinable
-    public init(effect: Effect) {
+    public init(
+        effect: Effect,
+        animation: Animation
+    ) {
         self.effect = effect
+        self.animation = .continuous(animation)
+    }
+
+    @inlinable
+    public init(
+        effect: Effect,
+        animation: ViewEffectAnimation = .default
+    ) {
+        self.effect = effect
+        self.animation = animation
     }
 
     public func makeBody(configuration: Configuration) -> some View {
@@ -39,7 +61,7 @@ public struct ChangeEffectButtonStyle<
         } label: {
             configuration.label
         }
-        .changeEffect(effect, value: trigger)
+        .changeEffect(effect, value: trigger, animation: animation)
     }
 }
 

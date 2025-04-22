@@ -285,3 +285,71 @@ private struct OnChangeViewEffectModifierBody<
     }
 }
 */
+
+// MARK: - Previews
+
+#if os(iOS) || os(macOS)
+
+@available(iOS 14.0, macOS 11.0, *)
+struct OnChangeViewEffectModifier_Previews: PreviewProvider {
+    struct PreviewEffect: ViewEffect {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.content
+                .onChange(of: configuration.progress) { newValue in
+                    print(newValue)
+                }
+        }
+    }
+
+    struct Preview: View {
+        @State var trigger = 0
+
+        var body: some View {
+            VStack {
+                ZStack {
+                    Color.blue
+
+                    Text("Trigger")
+                        .foregroundColor(.white)
+                }
+                .frame(width: 100, height: 100)
+                .changeEffect(
+                    .opacity,
+                    value: trigger
+                )
+
+                ZStack {
+                    Color.blue
+
+                    Text("Trigger")
+                        .foregroundColor(.white)
+                }
+                .frame(width: 100, height: 100)
+                .changeEffect(
+                    .background {
+                        Rectangle()
+                            .stroke(Color.blue, lineWidth: 2)
+                            .padding(-2)
+                            .transition(
+                                .asymmetric(
+                                    insertion: .scale(scale: 0.5),
+                                    removal: .scale(scale: 2)
+                                )
+                                .combined(with: .opacity)
+                            )
+                    },
+                    value: trigger
+                )
+            }
+            .onTapGesture {
+                trigger += 1
+            }
+        }
+    }
+
+    static var previews: some View {
+        Preview()
+    }
+}
+
+#endif

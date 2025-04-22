@@ -1,0 +1,13 @@
+version: 1
+builder:
+  configs:
+    - documentation_targets: [Ignition]
+      platform: macos
+    - documentation_targets: [Ignition]
+      platform: ios
+    - documentation_targets: [Ignition]
+      platform: tvos
+    - documentation_targets: [Ignition]
+      platform: watchos
+    - documentation_targets: [Ignition]
+      platform: visionos

@@ -94,6 +94,23 @@ struct OverlayEffect_Previews: PreviewProvider {
                     },
                     interval: 1
                 )
+
+            Text("Hello, World")
+                .scheduledEffect(
+                    .overlay {
+                        Rectangle()
+                            .stroke(Color.blue, lineWidth: 2)
+                            .padding(-2)
+                            .transition(
+                                .asymmetric(
+                                    insertion: .scale(scale: 0.5),
+                                    removal: .scale(scale: 2)
+                                )
+                                .combined(with: .opacity)
+                            )
+                    },
+                    interval: 0.05
+                )
         }
     }
 }
