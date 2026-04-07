@@ -12,8 +12,8 @@ extension ViewEffect {
     public static func background<Content: View>(
         alignment: Alignment = .center,
         content: Content
-    ) -> BackgroundEffect<Content> where Self == BackgroundEffect<Content> {
-        BackgroundEffect(
+    ) -> BackgroundViewEffect<Content> where Self == BackgroundViewEffect<Content> {
+        BackgroundViewEffect(
             alignment: alignment,
             content: content
         )
@@ -23,8 +23,8 @@ extension ViewEffect {
     public static func background<Content: View>(
         alignment: Alignment = .center,
         @ViewBuilder _ content: () -> Content
-    ) -> BackgroundEffect<Content> where Self == BackgroundEffect<Content> {
-        BackgroundEffect(
+    ) -> BackgroundViewEffect<Content> where Self == BackgroundViewEffect<Content> {
+        BackgroundViewEffect(
             alignment: alignment,
             content: content()
         )
@@ -34,7 +34,7 @@ extension ViewEffect {
 /// A ``ViewEffect`` that emits a view in the background
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
-public struct BackgroundEffect<Content: View>: ViewEffect {
+public struct BackgroundViewEffect<Content: View>: ViewEffect {
 
     public var alignment: Alignment
     public var content: Content
@@ -65,7 +65,7 @@ public struct BackgroundEffect<Content: View>: ViewEffect {
 // MARK: - Previews
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-struct BackgroundEffect_Previews: PreviewProvider {
+struct BackgroundViewEffect_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 24) {
             Text("Hello, World")

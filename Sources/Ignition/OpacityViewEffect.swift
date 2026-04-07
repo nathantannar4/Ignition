@@ -5,23 +5,23 @@
 import SwiftUI
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ViewEffect where Self == OpacityEffect {
+extension ViewEffect where Self == OpacityViewEffect {
 
     /// A ``ViewEffect`` that applies an opacity to the view
-    public static var opacity: OpacityEffect {
-        OpacityEffect(opacity: 0)
+    public static var opacity: OpacityViewEffect {
+        OpacityViewEffect(opacity: 0)
     }
 
     /// A ``ViewEffect`` that applies an opacity to the view
-    public static func opacity(_ opacity: Double) -> OpacityEffect {
-        OpacityEffect(opacity: opacity)
+    public static func opacity(_ opacity: Double) -> OpacityViewEffect {
+        OpacityViewEffect(opacity: opacity)
     }
 }
 
 /// A ``ViewEffect`` that applies an opacity to the view
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
-public struct OpacityEffect: ViewEffect {
+public struct OpacityViewEffect: ViewEffect {
 
     public var opacity: Double
 
@@ -39,7 +39,7 @@ public struct OpacityEffect: ViewEffect {
 // MARK: - Previews
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-struct OpacityEffect_Previews: PreviewProvider {
+struct OpacityViewEffect_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 0) {
             ForEach(0..<10) { index in

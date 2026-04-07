@@ -10,15 +10,15 @@ extension ViewEffect {
     /// A ``ViewEffect`` that concatenates an additional ``ViewEffect``
     public func concat<ConcatenatingEffect: ViewEffect>(
         _ effect: ConcatenatingEffect
-    ) -> ConcatenatedEffect<Self, ConcatenatingEffect> where Self: ViewEffect {
-        ConcatenatedEffect(effect: self, concatenating: effect)
+    ) -> ConcatenatedViewEffect<Self, ConcatenatingEffect> where Self: ViewEffect {
+        ConcatenatedViewEffect(effect: self, concatenating: effect)
     }
 }
 
 /// A ``ViewEffect`` that concatenates an additional ``ViewEffect``
 @frozen
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-public struct ConcatenatedEffect<
+public struct ConcatenatedViewEffect<
     Effect: ViewEffect,
     ConcatenatingEffect: ViewEffect
 >: ViewEffect {
@@ -48,7 +48,7 @@ public struct ConcatenatedEffect<
 // MARK: - Previews
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-struct ConcatenatedEffect_Previews: PreviewProvider {
+struct ConcatenatedViewEffect_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 24) {
             Text("Hello, World")

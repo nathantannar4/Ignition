@@ -5,21 +5,21 @@
 import SwiftUI
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ViewEffect where Self == BlurEffect {
+extension ViewEffect where Self == BlurViewEffect {
 
     /// A ``ViewEffect`` that applies a blur to the view
     public static func blur(
         radius: Double,
         opaque: Bool = false
-    ) -> BlurEffect {
-        BlurEffect(radius: radius, opaque: opaque)
+    ) -> BlurViewEffect {
+        BlurViewEffect(radius: radius, opaque: opaque)
     }
 }
 
 /// A ``ViewEffect`` that applies a blur to the view
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
-public struct BlurEffect: ViewEffect {
+public struct BlurViewEffect: ViewEffect {
 
     public var radius: Double
     public var opaque: Bool = false
@@ -39,7 +39,7 @@ public struct BlurEffect: ViewEffect {
 // MARK: - Previews
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-struct BlurEffect_Previews: PreviewProvider {
+struct BlurViewEffect_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 24) {
             Text("Hello, World")
