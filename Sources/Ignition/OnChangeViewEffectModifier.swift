@@ -19,9 +19,6 @@ public struct OnChangeViewEffectModifier<
     public var animation: ViewEffectAnimation
     public var isEnabled: Bool
 
-    @State private var id: UInt = 0
-    @State private var isActive = false
-
     @_disfavoredOverload
     @inlinable
     public init(
@@ -52,10 +49,37 @@ public struct OnChangeViewEffectModifier<
     }
 
     public func body(content: Content) -> some View {
-        let animation = (isActive ? animation.insertion : animation.removal) ?? .linear(duration: 0)
         content
             .modifier(
                 OnChangeViewEffectModifierBody(
+                    effect: effect,
+                    value: value,
+                    animation: animation,
+                    isEnabled: isEnabled
+                )
+            )
+    }
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+private struct OnChangeViewEffectModifierBody<
+    Effect: ViewEffect,
+    Value: Equatable
+>: ViewModifier {
+
+    var effect: Effect
+    var value: Value
+    var animation: ViewEffectAnimation
+    var isEnabled: Bool
+
+    @State var id: UInt = 0
+    @State var isActive = false
+
+    func body(content: Content) -> some View {
+        let animation = (isActive ? animation.insertion : animation.removal) ?? .linear(duration: 0)
+        content
+            .modifier(
+                OnChangeViewEffectTriggerModifier(
                     effect: effect,
                     isActive: $isActive,
                     id: id
@@ -64,7 +88,7 @@ public struct OnChangeViewEffectModifier<
             )
             .onChange(of: value) { _ in
                 if isEnabled {
-                    id = id &+ 1
+                    id &+= 1
                     isActive = true
                 }
             }
@@ -119,7 +143,7 @@ extension View {
 // Using AnimatableModifier due to:
 // FB13095046 - Animation behaviour broken for Animatable when type imported from framework
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-private struct OnChangeViewEffectModifierBody<
+private struct OnChangeViewEffectTriggerModifier<
     Effect: ViewEffect
 >: AnimatableModifier {
 
@@ -180,7 +204,7 @@ private struct OnChangeViewEffectModifierBody<
  
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
-public struct OnChangeViewEffectModifier<
+public struct OnChangeViewEffectTriggerModifier<
     Effect: ViewEffect,
     Value: Equatable
 >: ViewModifier {
@@ -219,7 +243,7 @@ public struct OnChangeViewEffectModifier<
             )
             .onChange(of: value) { _ in
                 if isEnabled {
-                    id = id &+ 1
+                    id &+= 1
                     trigger.toggle()
                     isActive = true
                 }

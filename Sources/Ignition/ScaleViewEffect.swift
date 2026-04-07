@@ -5,11 +5,11 @@
 import SwiftUI
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ViewEffect where Self == ScaleEffect {
+extension ViewEffect where Self == ScaleViewEffect {
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static var scale: ScaleEffect {
-        ScaleEffect(
+    public static var scale: ScaleViewEffect {
+        ScaleViewEffect(
             scale: CGSize(width: 1.25, height: 1.25),
             anchor: .center
         )
@@ -19,8 +19,8 @@ extension ViewEffect where Self == ScaleEffect {
     public static func scale(
         width: CGFloat,
         anchor: UnitPoint = .center
-    ) -> ScaleEffect {
-        ScaleEffect(
+    ) -> ScaleViewEffect {
+        ScaleViewEffect(
             scale: CGSize(width: width, height: 1.0),
             anchor: anchor
         )
@@ -30,8 +30,8 @@ extension ViewEffect where Self == ScaleEffect {
     public static func scale(
         height: CGFloat,
         anchor: UnitPoint = .center
-    ) -> ScaleEffect {
-        ScaleEffect(
+    ) -> ScaleViewEffect {
+        ScaleViewEffect(
             scale: CGSize(width: 1.0, height: height),
             anchor: anchor
         )
@@ -41,23 +41,23 @@ extension ViewEffect where Self == ScaleEffect {
     public static func scale(
         scale: CGFloat,
         anchor: UnitPoint = .center
-    ) -> ScaleEffect {
-        ScaleEffect(scale: CGSize(width: scale, height: scale), anchor: anchor)
+    ) -> ScaleViewEffect {
+        ScaleViewEffect(scale: CGSize(width: scale, height: scale), anchor: anchor)
     }
 
     /// A ``ViewEffect`` that scales a view between a size
     public static func scale(
         scale: CGSize,
         anchor: UnitPoint = .center
-    ) -> ScaleEffect {
-        ScaleEffect(scale: scale, anchor: anchor)
+    ) -> ScaleViewEffect {
+        ScaleViewEffect(scale: scale, anchor: anchor)
     }
 }
 
 /// A ``ViewEffect`` that scales a view between a size
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
-public struct ScaleEffect: ViewEffect {
+public struct ScaleViewEffect: ViewEffect {
 
     public var scale: CGSize
     public var anchor: UnitPoint
@@ -100,7 +100,7 @@ public struct ScaleEffect: ViewEffect {
 // MARK: - Previews
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-struct ScaleEffect_Previews: PreviewProvider {
+struct ScaleViewEffect_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 24) {
             Text("Hello, World")

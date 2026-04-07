@@ -19,8 +19,6 @@ public struct ScheduledViewEffectModifier<
     public var animation: ViewEffectAnimation
     public var isEnabled: Bool
 
-    @State private var id: UInt = 0
-
     @_disfavoredOverload
     @inlinable
     public init(
@@ -52,17 +50,39 @@ public struct ScheduledViewEffectModifier<
 
     public func body(content: Content) -> some View {
         content
-            .changeEffect(effect, value: id, animation: animation, isEnabled: isEnabled)
+            .modifier(
+                ScheduledViewEffectModifierBody(
+                    effect: effect,
+                    interval: interval,
+                    animation: animation,
+                    isEnabled: isEnabled
+                )
+            )
+    }
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+private struct ScheduledViewEffectModifierBody<Effect: ViewEffect>: ViewModifier {
+
+    var effect: Effect
+    var interval: TimeInterval
+    var animation: ViewEffectAnimation
+    var isEnabled: Bool
+
+    @State var trigger: UInt = 0
+
+    func body(content: Content) -> some View {
+        content
+            .changeEffect(effect, value: trigger, animation: animation, isEnabled: isEnabled)
             .onReceive(
                 Timer.publish(every: interval, on: .main, in: .common).autoconnect()
             ) { _ in
                 if isEnabled {
-                    id = id &+ 1
+                    trigger &+= 1
                 }
             }
     }
 }
-
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension View {

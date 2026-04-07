@@ -17,8 +17,8 @@ https://github.com/nathantannar4/Ignition/assets/15272998/0d7b97a0-bf3a-4c07-9a0
 
 ## Requirements
 
-- Deployment target: iOS 13.0, macOS 10.15, tvOS 13.0, or watchOS 6.0
-- Xcode 15+
+- Deployment target: iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0 or visionOS 1.0
+- Xcode 16.4+
 
 ## Installation
 
@@ -98,7 +98,7 @@ extension ViewEffect {
     /// A ``ViewEffect`` that concatenates an additional ``ViewEffect``
     public func concat<ConcatenatingEffect: ViewEffect>(
         _ effect: ConcatenatingEffect
-    ) -> ConcatenatedEffect<Self, ConcatenatingEffect> where Self: ViewEffect
+    ) -> ConcatenatedViewEffect<Self, ConcatenatingEffect> where Self: ViewEffect
 }
 ```
 
@@ -144,7 +144,7 @@ extension View {
 }
 ```
 
-### BackgroundEffect
+### BackgroundViewEffect
 
 ```swift
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -154,11 +154,11 @@ extension ViewEffect {
     public static func background<Content: View>(
         alignment: Alignment = .center,
         @ViewBuilder _ content: () -> Content
-    ) -> BackgroundEffect<Content> where Self == BackgroundEffect<Content>
+    ) -> BackgroundViewEffect<Content> where Self == BackgroundViewEffect<Content>
 }
 ```
 
-### OverlayEffect
+### OverlayViewEffect
 
 ```swift
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
@@ -168,64 +168,64 @@ extension ViewEffect {
     public static func overlay<Content: View>(
         alignment: Alignment = .center,
         @ViewBuilder _ content: () -> Content
-    ) -> OverlayEffect<Content> where Self == OverlayEffect<Content>
+    ) -> OverlayViewEffect<Content> where Self == OverlayViewEffect<Content>
 }
 ```
 
-### OffsetEffect
+### OffsetViewEffect
 
 ```swift
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ViewEffect where Self == OffsetEffect {
+extension ViewEffect where Self == OffsetViewEffect {
 
     /// A ``ViewEffect`` that moves the view between an offset
-    public static var offset: OffsetEffect
+    public static var offset: OffsetViewEffect
 
     /// A ``ViewEffect`` that moves the view between an offset
-    public static func offset(x: CGFloat) -> OffsetEffect
+    public static func offset(x: CGFloat) -> OffsetViewEffect
 
     /// A ``ViewEffect`` that moves the view between an offset
-    public static func offset(y: CGFloat) -> OffsetEffect
+    public static func offset(y: CGFloat) -> OffsetViewEffect
 
     /// A ``ViewEffect`` that moves the view between an offset
-    public static func offset(offset: CGPoint) -> OffsetEffect
+    public static func offset(offset: CGPoint) -> OffsetViewEffect
 }
 ```
 
-### RotationEffect
+### RotationViewEffect
 
 ```swift
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ViewEffect where Self == RotationEffect {
+extension ViewEffect where Self == RotationViewEffect {
 
     /// A ``ViewEffect`` that rotates the view by an angle
-    public static var rotate: RotationEffect
+    public static var rotate: RotationViewEffect
 
     /// A ``ViewEffect`` that rotates the view by an angle
-    public static func rotate(angle: Angle, anchor: UnitPoint = .center) -> RotationEffect
+    public static func rotate(angle: Angle, anchor: UnitPoint = .center) -> RotationViewEffect
 }
 ```
 
-### ScaleEffect
+### ScaleViewEffect
 
 ```swift
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ViewEffect where Self == ScaleEffect {
+extension ViewEffect where Self == ScaleViewEffect {
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static var scale: ScaleEffect
+    public static var scale: ScaleViewEffect
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static func scale(width: CGFloat, anchor: UnitPoint = .center) -> ScaleEffect
+    public static func scale(width: CGFloat, anchor: UnitPoint = .center) -> ScaleViewEffect
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static func scale(height: CGFloat, anchor: UnitPoint = .center) -> ScaleEffect
+    public static func scale(height: CGFloat, anchor: UnitPoint = .center) -> ScaleViewEffect
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static func scale(scale: CGFloat, anchor: UnitPoint = .center) -> ScaleEffect
+    public static func scale(scale: CGFloat, anchor: UnitPoint = .center) -> ScaleViewEffect
 
     /// A ``ViewEffect`` that scales a view between a size
-    public static func scale(scale: CGSize, anchor: UnitPoint = .center) -> ScaleEffect
+    public static func scale(scale: CGSize, anchor: UnitPoint = .center) -> ScaleViewEffect
 }
 ```
 
@@ -240,6 +240,6 @@ extension PrimitiveButtonStyle {
     /// A ``PrimitiveButtonStyle`` that runs a ``ViewEffect`` when pressed
     public static func changeEffect<Effect: ViewEffect>(
         effect: Effect
-    ) -> ChangeEffectButtonStyle<Effect> where Self == ChangeEffectButtonStyle<Effect>
+    ) -> ViewEffectButtonStyle<Effect> where Self == ViewEffectButtonStyle<Effect>
 }
 ```

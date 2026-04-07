@@ -5,23 +5,23 @@
 import SwiftUI
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-extension ViewEffect where Self == RotationEffect {
+extension ViewEffect where Self == RotationViewEffect {
 
     /// A ``ViewEffect`` that rotates the view by an angle
-    public static var rotate: RotationEffect {
-        RotationEffect(angle: .degrees(360), anchor: .center)
+    public static var rotate: RotationViewEffect {
+        RotationViewEffect(angle: .degrees(360), anchor: .center)
     }
 
     /// A ``ViewEffect`` that rotates the view by an angle
-    public static func rotate(angle: Angle, anchor: UnitPoint = .center) -> RotationEffect {
-        RotationEffect(angle: angle, anchor: anchor)
+    public static func rotate(angle: Angle, anchor: UnitPoint = .center) -> RotationViewEffect {
+        RotationViewEffect(angle: angle, anchor: anchor)
     }
 }
 
 /// A ``ViewEffect`` that rotates the view by an angle
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
-public struct RotationEffect: ViewEffect {
+public struct RotationViewEffect: ViewEffect {
 
     public var angle: Angle
     public var anchor: UnitPoint
@@ -69,7 +69,7 @@ public struct RotationEffect: ViewEffect {
 // MARK: - Previews
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-struct RotationEffect_Previews: PreviewProvider {
+struct RotationViewEffect_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 24) {
             Text("Hello, World")

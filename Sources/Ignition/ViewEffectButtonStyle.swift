@@ -11,30 +11,28 @@ extension PrimitiveButtonStyle {
     /// A ``PrimitiveButtonStyle`` that runs a ``ViewEffect`` when pressed
     public static func changeEffect<Effect: ViewEffect>(
         effect: Effect
-    ) -> ChangeEffectButtonStyle<Effect> where Self == ChangeEffectButtonStyle<Effect> {
-        ChangeEffectButtonStyle(effect: effect)
+    ) -> ViewEffectButtonStyle<Effect> where Self == ViewEffectButtonStyle<Effect> {
+        ViewEffectButtonStyle(effect: effect)
     }
 
     /// A ``PrimitiveButtonStyle`` that runs a ``ViewEffect`` when pressed
     public static func changeEffect<Effect: ViewEffect>(
         effect: Effect,
         animation: Animation
-    ) -> ChangeEffectButtonStyle<Effect> where Self == ChangeEffectButtonStyle<Effect> {
-        ChangeEffectButtonStyle(effect: effect, animation: animation)
+    ) -> ViewEffectButtonStyle<Effect> where Self == ViewEffectButtonStyle<Effect> {
+        ViewEffectButtonStyle(effect: effect, animation: animation)
     }
 }
 
 /// A ``PrimitiveButtonStyle`` that runs a ``ViewEffect`` when pressed
 @frozen
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-public struct ChangeEffectButtonStyle<
+public struct ViewEffectButtonStyle<
     Effect: ViewEffect
 >: PrimitiveButtonStyle {
 
     public var effect: Effect
     public var animation: ViewEffectAnimation
-
-    @State private var trigger: UInt = 0
 
     @inlinable
     public init(
@@ -55,6 +53,24 @@ public struct ChangeEffectButtonStyle<
     }
 
     public func makeBody(configuration: Configuration) -> some View {
+        ViewEffectButtonStyleBody(
+            effect: effect,
+            animation: animation,
+            configuration: configuration
+        )
+    }
+}
+
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+private struct ViewEffectButtonStyleBody<Effect: ViewEffect>: View {
+
+    var effect: Effect
+    var animation: ViewEffectAnimation
+    var configuration: PrimitiveButtonStyle.Configuration
+
+    @State var trigger: UInt = 0
+
+    var body: some View {
         Button {
             trigger &+= 1
             configuration.trigger()
@@ -68,7 +84,7 @@ public struct ChangeEffectButtonStyle<
 // MARK: - Previews
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-struct ChangeEffectButtonStyle_Previews: PreviewProvider {
+struct ViewEffectButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 24) {
             Button {
