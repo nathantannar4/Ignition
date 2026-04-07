@@ -12,8 +12,8 @@ extension ViewEffect {
     public static func overlay<Content: View>(
         alignment: Alignment = .center,
         content: Content
-    ) -> OverlayEffect<Content> where Self == OverlayEffect<Content> {
-        OverlayEffect(
+    ) -> OverlayViewEffect<Content> where Self == OverlayViewEffect<Content> {
+        OverlayViewEffect(
             alignment: alignment,
             content: content
         )
@@ -23,8 +23,8 @@ extension ViewEffect {
     public static func overlay<Content: View>(
         alignment: Alignment = .center,
         @ViewBuilder _ content: () -> Content
-    ) -> OverlayEffect<Content> where Self == OverlayEffect<Content> {
-        OverlayEffect(
+    ) -> OverlayViewEffect<Content> where Self == OverlayViewEffect<Content> {
+        OverlayViewEffect(
             alignment: alignment,
             content: content()
         )
@@ -34,7 +34,7 @@ extension ViewEffect {
 /// A ``ViewEffect`` that emits a view in the foreground
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 @frozen
-public struct OverlayEffect<Content: View>: ViewEffect {
+public struct OverlayViewEffect<Content: View>: ViewEffect {
 
     public var alignment: Alignment
     public var content: Content
@@ -65,7 +65,7 @@ public struct OverlayEffect<Content: View>: ViewEffect {
 // MARK: - Previews
 
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
-struct OverlayEffect_Previews: PreviewProvider {
+struct OverlayViewEffect_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 24) {
             Text("Hello, World")
